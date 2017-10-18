@@ -4,6 +4,10 @@
 .classpath
 .project
 .settings/*
+.target/*
+
+#test
+test/*
 
 # Compiled class file
 *.class
