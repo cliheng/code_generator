@@ -27,7 +27,7 @@
        <trim prefix="where" prefixOverrides="and | or">
            <#list table.fieldList as field>
            <if test="${field.columnName} != null<#if (field.fieldType == 'String')> and ${field.fieldName}!=''</#if>">
-               and ${field.columnName} <#if (field.fieldType == 'String')>like<#else>=</#if> ${'#'}{${field.columnName}}
+               and ${field.columnName} <#if (field.fieldType == 'String')>like CONCAT('%',${'#'}{${field.columnName}},'%')<#else>= ${'#'}{${field.columnName}}</#if> 
            </if>
            </#list>
        </trim>
@@ -46,11 +46,13 @@
 
    <update id="update${table.className}" parameterType="${packageInfo}.pojo.${table.className}">
        update ${table.tableName}
-       <trim prefix="set" suffixOverrides="," suffix="where ${table.primaryKeyField.columnName}=${'#'}{id}">
+       <trim prefix="set" suffixOverrides="," suffix="where ${table.primaryKeyField.columnName}=${'#'}{${table.primaryKeyField.columnName}}">
            <#list table.fieldList as field>
-           <if test="${field.fieldName} != null<#if (field.fieldType == 'String')> and ${field.fieldName}!=''</#if>">
+           <#if (field.fieldName != table.primaryKeyField.fieldName)>
+           <if test="${field.fieldName} != null<#if (field.fieldType == 'String')> and ${field.fieldName}!=''</#if>">       
                ${field.columnName}=${'#'}{${field.fieldName}}<#if field_has_next>,</#if>
            </if>
+           </#if>
            </#list>
        </trim>
    </update>
