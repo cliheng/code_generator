@@ -32,15 +32,30 @@
            </#list>
        </trim>
    </select>
+   
+   <select id="get${table.className}RecordCount" resultType="int" parameterType="java.util.Map">
+			select count(1) from ${table.tableName}
+		<trim prefix="where" prefixOverrides="and | or">
+           <#list table.fieldList as field>
+           <if test="${field.columnName} != null<#if (field.fieldType == 'String')> and ${field.fieldName}!=''</#if>">
+               and ${field.columnName} <#if (field.fieldType == 'String')>like CONCAT('%',${'#'}{${field.columnName}},'%')<#else>= ${'#'}{${field.columnName}}</#if> 
+           </if>
+           </#list>
+       </trim>
+   </select>
 
    <insert id="insert${table.className}" parameterType="${packageInfo}.pojo.${table.className}">
        insert into ${table.tableName}(
        <#list table.fieldList as field>
-       ${field.columnName}<#if field_has_next>,</#if>
+       	  <#if (field.columnName != table.primaryKeyField.fieldName)>
+       		${field.columnName}<#if field_has_next>,</#if>
+       	  </#if>
        </#list>)
        values(
        <#list table.fieldList as field>
-       ${'#'}{${field.fieldName}}<#if field_has_next>,</#if>
+       	  <#if (field.columnName != table.primaryKeyField.fieldName)>
+       		${'#'}{${field.fieldName}}<#if field_has_next>,</#if>
+       	  </#if>
        </#list>)
    </insert>
 

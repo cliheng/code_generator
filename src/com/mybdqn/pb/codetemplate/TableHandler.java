@@ -1,5 +1,6 @@
 package com.mybdqn.pb.codetemplate;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +20,7 @@ public class TableHandler {
 
     public TableHandler() throws IOException, ClassNotFoundException, SQLException {
         Properties properties = new Properties();
-        FileReader reader = new FileReader(Constant.properties_path + PROPERTIES_FILE_NAME);
+        FileReader reader = new FileReader(Constant.properties_path + "/" + PROPERTIES_FILE_NAME);
 
         properties.load(reader);
 
