@@ -1,14 +1,19 @@
 package com.mybdqn.pb.codetemplate;
 
+import java.net.URL;
+
 /**
  * Created by chenliheng on 2017/10/13.
  */
 public class Constant {
-
-	public static String properties_path = "C:/eclipse_workspace/U86/code_generator/resources/";
 	
-    public static String template_path = "C:/eclipse_workspace/U86/code_generator/resources/template";
+	static{
+		URL url = Constant.class.getClassLoader().getResource("db.properties");
+		String tpath = url.getPath().substring(1);
+		properties_path = tpath.replaceFirst("target/.*", "resources/");
+	}
 
-    public static String generator_code_path = "c:/outfile/";
+	public static String properties_path;
+    public static String template_path = properties_path + "template";
 
 }

@@ -14,6 +14,8 @@ import java.util.Properties;
  */
 public class TableHandler {
 
+	private String tabPrefix;	// 表名前缀
+	private String colPrefix;	// 列名前缀
     private static final String PROPERTIES_FILE_NAME = "db.properties";
 
     private List<Table> tables;
@@ -41,7 +43,7 @@ public class TableHandler {
             Table table = new Table();
             tables.add(table);
             String tablename = rsTable.getString("TABLE_NAME");
-            String classname = getClassName(tablename, null);
+            String classname = getClassName(tablename, tabPrefix);
             table.setTableName(tablename);
             table.setClassName(classname);
 
@@ -61,7 +63,7 @@ public class TableHandler {
                 String columnname = crs.getString("COLUMN_NAME");
                 String columntype = crs.getString("TYPE_NAME");
                 field.setColumnName(columnname);
-                field.setFieldName(getFieldName(columnname, null));
+                field.setFieldName(getFieldName(columnname, colPrefix));
                 field.setFieldType(getFieldType(columntype));
 
                 if(columnname.equals(pk)){
@@ -101,9 +103,9 @@ public class TableHandler {
      * @return
      */
     public String getFieldName(String columnName, String colPrefix){
-        String res = columnName.toLowerCase();
+        String res = columnName;
         // 消除表前缀
-        if(colPrefix != null && res.startsWith(colPrefix.toLowerCase())) {
+        if(colPrefix != null && res.toLowerCase().startsWith(colPrefix.toLowerCase())) {
             res = res.substring(colPrefix.length());
         }
         String[] columnNames = res.split("_");
@@ -169,5 +171,21 @@ public class TableHandler {
     public List<Table> getTables(){
         return this.tables;
     }
+
+	public String getTabPrefix() {
+		return tabPrefix;
+	}
+
+	public void setTabPrefix(String tabPrefix) {
+		this.tabPrefix = tabPrefix;
+	}
+
+	public String getColPrefix() {
+		return colPrefix;
+	}
+
+	public void setColPrefix(String colPrefix) {
+		this.colPrefix = colPrefix;
+	}
 
 }
