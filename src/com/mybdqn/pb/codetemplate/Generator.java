@@ -11,8 +11,9 @@ public class Generator {
 
     public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
         TableHandler tableHandler = new TableHandler();
-        MVCHandler mvcHandler = new MVCHandler();
-        mvcHandler.setPackageInfo("cn.bdqn");
+        tableHandler.setTabPrefix("smbms_");					// 设置表名前缀
+        MVCHandler mvcHandler = new MVCHandler("c:/outfile/");	// 设置输出目录名
+        mvcHandler.setPackageInfo("test.bdqn");					// 设置源码包名		
 
         List<Table> tableList = tableHandler.getTables();
         for (Table table:tableList) {

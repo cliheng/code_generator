@@ -17,11 +17,23 @@ import java.util.Map;
 public class MVCHandler {
 
     private String packageInfo;     // 项目包名
+    private String generatorCodePath; // 代码生成目录
 
     private FreemarkerBase base;
 
-    public MVCHandler(){
+    public MVCHandler(String generatorCodepath){
         base = new FreemarkerBase(Constant.template_path);
+        
+        this.generatorCodePath = generatorCodepath;
+        
+        if(generatorCodePath == null || generatorCodePath.equals("")){
+        	throw new RuntimeException("请设置代表生成的目录");
+        }
+        
+        File path = new File(generatorCodePath);
+        if(!path.exists()){
+        	path.mkdirs();
+        }
     }
 
     /**
@@ -31,7 +43,7 @@ public class MVCHandler {
         Map<String,Object> modelDate = new HashMap<String, Object>();
         modelDate.put("packageInfo", packageInfo);
 
-        String configpath = Constant.generator_code_path + "/resources/";
+        String configpath = generatorCodePath + "/resources/";
         File configDir = new File(configpath);
         if(!configDir.exists()){
             configDir.mkdirs();
@@ -39,7 +51,7 @@ public class MVCHandler {
 
         String springFileName = configpath + "spring-mybatis.xml";
         String springMVCFileName = configpath + "springmvc.xml";
-        String webFileName = Constant.generator_code_path + "/web.xml";
+        String webFileName = generatorCodePath + "/web.xml";
         try {
             BufferedWriter bws = new BufferedWriter(new FileWriter(springFileName));
             BufferedWriter bwmvc = new BufferedWriter(new FileWriter(springMVCFileName));
@@ -68,7 +80,7 @@ public class MVCHandler {
             throw new RuntimeException("表" + table.getTableName() + "缺少主键约束，Service接口生成失败！");
         }
         String pojoPackage = packageInfo + ".pojo";
-        String packages = makePackageDirectory(Constant.generator_code_path, pojoPackage);
+        String packages = makePackageDirectory(generatorCodePath, pojoPackage);
 
         Map<String,Object> modelDate = new HashMap<String, Object>();
 
@@ -98,7 +110,7 @@ public class MVCHandler {
             throw new RuntimeException("表" + table.getTableName() + "缺少主键约束，Service接口生成失败！");
         }
         String pojoPackage = packageInfo + ".dao";
-        String packages = makePackageDirectory(Constant.generator_code_path, pojoPackage);
+        String packages = makePackageDirectory(generatorCodePath, pojoPackage);
 
         Map<String,Object> modelDate = new HashMap<String, Object>();
 
@@ -128,7 +140,7 @@ public class MVCHandler {
             throw new RuntimeException("表" + table.getTableName() + "缺少主键约束，Service接口生成失败！");
         }
         String servicePackage = packageInfo + ".service";
-        String packages = makePackageDirectory(Constant.generator_code_path,servicePackage);
+        String packages = makePackageDirectory(generatorCodePath,servicePackage);
 
         Map<String,Object> modelDate = new HashMap<String, Object>();
 
@@ -164,7 +176,7 @@ public class MVCHandler {
             throw new RuntimeException("表" + table.getTableName() + "缺少主键约束，Service接口生成失败！");
         }
         String servicePackage = packageInfo + ".dao";
-        String packages = makePackageDirectory(Constant.generator_code_path,servicePackage);
+        String packages = makePackageDirectory(generatorCodePath,servicePackage);
 
         Map<String,Object> modelDate = new HashMap<String, Object>();
 
@@ -206,4 +218,14 @@ public class MVCHandler {
     public void setPackageInfo(String packageInfo) {
         this.packageInfo = packageInfo;
     }
+
+	public String getGeneratorCodePath() {
+		return generatorCodePath;
+	}
+
+	public void setGeneratorCodePath(String generatorCodePath) {
+		this.generatorCodePath = generatorCodePath;
+	}
+    
+    
 }
