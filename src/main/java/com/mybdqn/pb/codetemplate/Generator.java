@@ -10,9 +10,9 @@ import java.util.List;
 public class Generator {
 
     public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {
-        TableHandler tableHandler = new TableHandler("t_",null); // 设置表名前缀				
-        MVCHandler mvcHandler = new MVCHandler("c:/outfile/");	// 设置输出目录名
-        mvcHandler.setPackageInfo("test.bdqn");					// 设置源码包名		
+        TableHandler tableHandler = new TableHandler(null,null); // 设置表名前缀
+        MVCHandler mvcHandler = new MVCHandler("/Users/chenliheng/Documents/工作/shiro/shiroCustomRealm/");	// 设置输出目录名
+        mvcHandler.setPackageInfo("com.mybdqn");					// 设置源码包名
 
         List<Table> tableList = tableHandler.getTables();
         for (Table table:tableList) {
