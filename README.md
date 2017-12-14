@@ -1,7 +1,7 @@
 # code_generator
-为北大青鸟学士后JAVA6.0机试考试准备的代码生成工具
-creation date: 2017/10/17
-last modify date: 2017/12/14
+为北大青鸟学士后JAVA6.0机试考试准备的代码生成工具<br>
+creation date: 2017/10/17<br>
+last modify date: 2017/12/14<br>
 
 应用技术:freemarker2.3.26、maven、mysql
 
