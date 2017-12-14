@@ -5,6 +5,10 @@
 .settings/*
 .target/*
 
+#IDEA files
+.idea/*
+*.iml
+
 #test
 test/*
 

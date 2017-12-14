@@ -1,16 +1,14 @@
 # code_generator
 为北大青鸟学士后JAVA6.0机试考试准备的代码生成工具
-2017/10/17
+creation date: 2017/10/17
+last modify date: 2017/12/14
 
 应用技术:freemarker2.3.26、maven、mysql
 
-使用说明:
-编辑Constant.java文件中的文件路径，分别指定
-  properties_path=database.properties文件所在目录
-  template_path=templates模板文件所在目录
-  generator_code_path=生成代码文件所在目录
-
-调用Generator类main方法生成源代码。其中
+## 使用说明:
+### 调用Generator类main方法生成源代码:<br>
+```Java
+  TableHandler tableHandler = new TableHandler("t_","c_"); // 参数1:表名前缀,参数2:列名前缀
   mvcHandler.setPackageInfo("cn.bdqn"); // 设置源码文件所在父包名称
   
   mvcHandler.executeModel(table);       // 生成实体类
@@ -18,9 +16,11 @@
   mvcHandler.executeMapper(table);      // 生成Mapper.xml文件
   mvcHandler.executeService(table);     // 生成Service接口及实现子类
   mvcHandler.executeConfigFile();       // 生成对应配置文件
-  
-创建新的web项目，导入生成的源码，使用maven管理项目中jar文件的依赖项
+```
+
+### 创建新的web项目，导入生成的源码，使用maven管理项目中jar文件的依赖项
 pom.xml 关键内容截取
+``` XML
   <properties>
   	<spring-version>4.3.11.RELEASE</spring-version>
   </properties>
@@ -92,3 +92,4 @@ pom.xml 关键内容截取
 	    <scope>test</scope>
 	</dependency>
   </dependencies>
+```
