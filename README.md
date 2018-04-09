@@ -92,4 +92,16 @@ pom.xml 关键内容截取
 	    <scope>test</scope>
 	</dependency>
   </dependencies>
+
+  <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml
+                    </include>
+                </includes>
+            </resource>
+        </resources>
+  </build>
 ```
